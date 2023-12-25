@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MongoDB Customers Collection</title>
+</head>
+<body style="text-align: center; background-color: aquamarine;">
+    <h1>MongoDB Customers Collection</h1>
+    <h2>Add new document/customer:</h2>
+    <form method="post">
+        Name:<input type="text" id="customer_name" name="customer_name" required>
+        <br>
+        Email:<input type="email" id="customer_email" name="customer_email" required>
+        <br>
+        <input type="submit" value="Add Customer">
+    </form>
+
+    <h2>All Customers:</h2>
+    <ul>
+        {% for customer in customers %}
+            <li>{{ customer.name }} - {{ customer.email }}
+                <form method="post" action="/delete">
+                    <input type="hidden" name="customer_id" value="{{ customer._id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
