@@ -9,8 +9,13 @@ myclient = pymongo.MongoClient("mongodb+srv://MOSHEL7:MosheL2680@cluster0.zebvav
 mydb = myclient["mydatabase"]
 mycol = mydb["customers"]
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+
+@app.route('/')
+def index ():
+    return render_template('index.html')
+
+@app.route('/mongo', methods=['GET', 'POST'])
+def mongo():
     if request.method == 'POST':
         # Get form data
         customer_name = request.form.get('customer_name')
@@ -22,14 +27,14 @@ def index():
 
     # Retrieve all customers from the database
     customers = list(mycol.find())
-    return render_template('index.html', customers=customers)
+    return render_template('mongo.html', customers=customers)
                            
                            
 @app.route('/delete', methods=['POST'])
 def delete_customer():
     customer_id = request.form.get('customer_id')
     mycol.delete_one({'_id': ObjectId(customer_id)})
-    return redirect(url_for('index'))
+    return redirect(url_for('mongo'))
 
 
 if __name__ == '__main__':
